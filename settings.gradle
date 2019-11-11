@@ -1,0 +1,6 @@
+rootProject.name = 'whatsnew'
+include 'core'
+include 'web'
+include 'notifier'
+include 'collector'
+
