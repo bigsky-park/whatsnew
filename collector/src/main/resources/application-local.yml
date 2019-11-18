@@ -1,0 +1,10 @@
+spring:
+  profiles: local
+
+naver:
+  api:
+    scheme: https
+    host: openapi.naver.com
+    paths: v1/search/book_adv.xml
+    client-id: ${NAVER_CLIENT_ID}
+    client-secret: ${NAVER_CLIENT_SECRET}
