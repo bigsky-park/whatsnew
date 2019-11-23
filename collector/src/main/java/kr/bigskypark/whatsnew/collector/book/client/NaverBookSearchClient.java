@@ -10,8 +10,6 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,6 +19,7 @@ import java.util.function.Predicate;
 import static java.util.Objects.requireNonNull;
 import static kr.bigskypark.whatsnew.collector.book.config.NaverApiProperties.CLIENT_ID_HEADER;
 import static kr.bigskypark.whatsnew.collector.book.config.NaverApiProperties.CLIENT_SECRET_HEADER;
+import static kr.bigskypark.whatsnew.collector.book.util.HttpUrlUtils.*;
 
 @RequiredArgsConstructor
 @Component
@@ -57,42 +56,17 @@ public class NaverBookSearchClient implements BookSearchClient {
         return builder.build();
     }
 
-    private void setQueryParams(final HttpUrl.Builder httpUrlBuilder,
-                                final DetailBookSearchRequest searchRequest) {
-        addParamIfValid(httpUrlBuilder, i -> (i > 0 && i <= 100), "display", searchRequest.getDisplay());
+    private static void setQueryParams(final HttpUrl.Builder httpUrlBuilder,
+                                       final DetailBookSearchRequest searchRequest) {
+        addParamIfValid(httpUrlBuilder, i -> (i > -1 && i <= 100), "display", searchRequest.getDisplay());
         addParamIfValid(httpUrlBuilder, Objects::nonNull, "d_titl", searchRequest.getDTitle());
         addParamIfValid(httpUrlBuilder, Objects::nonNull, "d_auth", searchRequest.getDAuth());
         addParamIfValid(httpUrlBuilder, Objects::nonNull, "d_cont", searchRequest.getDCont());
         addParamIfValid(httpUrlBuilder, Objects::nonNull, "d_isbn", searchRequest.getDIsbn());
         addParamIfValid(httpUrlBuilder, Objects::nonNull, "d_publ", searchRequest.getDPubl());
         addParamIfValid(httpUrlBuilder, Objects::nonNull, "d_catg", searchRequest.getDCatg());
-        addDateParamsIfValid(httpUrlBuilder, searchRequest.getDDafr(), searchRequest.getDDato());
-    }
-
-    private void addParamIfValid(final HttpUrl.Builder httpUrlBuilder,
-                                 final Predicate<Integer> predicate,
-                                 final String key,
-                                 final int value) {
-        if (predicate.test(value)) {
-            httpUrlBuilder.addQueryParameter(key, Integer.toString(value));
-        }
-    }
-
-    private void addParamIfValid(final HttpUrl.Builder httpUrlBuilder,
-                                 final Predicate<String> predicate,
-                                 final String key,
-                                 final String value) {
-        if (predicate.test(value)) {
-            httpUrlBuilder.addQueryParameter(key, value);
-        }
-    }
-
-    private void addDateParamsIfValid(final HttpUrl.Builder httpUrlBuilder,
-                                      final String dDafr,
-                                      final String dDato) {
-        // TODO: do validation for date parameters
-        httpUrlBuilder.addQueryParameter("d_dafr", dDafr);
-        httpUrlBuilder.addQueryParameter("d_dato", dDato);
+        addDateRangeParamsIfValid(httpUrlBuilder, "d_dafr",
+                searchRequest.getDDafr(), "d_dato", searchRequest.getDDato());
     }
 
     private Request buildRequestFor(final HttpUrl httpUrl) {
