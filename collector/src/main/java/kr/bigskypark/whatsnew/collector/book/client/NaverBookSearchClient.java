@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import static java.util.Objects.requireNonNull;
 import static kr.bigskypark.whatsnew.collector.book.config.NaverApiProperties.CLIENT_ID_HEADER;
 import static kr.bigskypark.whatsnew.collector.book.config.NaverApiProperties.CLIENT_SECRET_HEADER;
-import static kr.bigskypark.whatsnew.collector.book.util.HttpUrlUtils.*;
+import static kr.bigskypark.whatsnew.collector.book.util.HttpUrlUtils.addDateRangeParamsIfValid;
+import static kr.bigskypark.whatsnew.collector.book.util.HttpUrlUtils.addParamIfValid;
 
 @RequiredArgsConstructor
 @Component
@@ -33,10 +33,10 @@ public class NaverBookSearchClient implements BookSearchClient {
 
     @Override
     public Rss searchFor(final DetailBookSearchRequest searchRequest) {
-        HttpUrl httpUrl = buildUrlForDetailBookSearch(searchRequest);
-        Request request = buildRequestFor(httpUrl);
+        final var httpUrl = buildUrlForDetailBookSearch(searchRequest);
+        final var request = buildRequestFor(httpUrl);
 
-        try (Response response = okHttpClient.newCall(request).execute()) {
+        try (var response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 return xmlMapper.readValue(requireNonNull(response.body()).byteStream(), Rss.class);
             } else {
@@ -48,7 +48,7 @@ public class NaverBookSearchClient implements BookSearchClient {
     }
 
     private HttpUrl buildUrlForDetailBookSearch(final DetailBookSearchRequest searchRequest) {
-        HttpUrl.Builder builder = new HttpUrl.Builder()
+        final var builder = new HttpUrl.Builder()
                 .scheme(naverApiProperties.getScheme())
                 .host(naverApiProperties.getHost())
                 .addPathSegments(naverApiProperties.getPaths());

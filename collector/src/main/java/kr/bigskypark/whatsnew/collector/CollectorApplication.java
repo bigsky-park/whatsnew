@@ -7,7 +7,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CollectorApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CollectorApplication.class, args);
+        int exitCode = 0;
+        try {
+            SpringApplication.run(CollectorApplication.class, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            exitCode = 1;
+        } finally {
+            System.exit(exitCode);
+        }
     }
 
 }

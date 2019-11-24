@@ -37,10 +37,21 @@ subprojects {
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+
+        implementation('com.amazonaws:aws-java-sdk-s3:1.11.679')
+        implementation('javax.xml.bind:jaxb-api:2.3.1')
     }
 }
 
 project(':core') {
+    // references from https://stackoverflow.com/a/47673098
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
 }
 
 project(':web') {
@@ -56,6 +67,13 @@ project(':collector') {
 }
 
 project(':notifier') {
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
     dependencies {
         compile project(':core')
     }

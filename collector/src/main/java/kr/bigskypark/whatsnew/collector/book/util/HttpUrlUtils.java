@@ -48,8 +48,8 @@ public final class HttpUrlUtils {
     private static boolean isValidDateRange(final String dateFromValue,
                                             final String dateToValue) {
         try {
-            LocalDate dateBefore = LocalDate.parse(dateFromValue, SIMPLE_DATE_FORMAT);
-            LocalDate dateTo = LocalDate.parse(dateToValue, SIMPLE_DATE_FORMAT);
+            final var dateBefore = LocalDate.parse(dateFromValue, SIMPLE_DATE_FORMAT);
+            final var dateTo = LocalDate.parse(dateToValue, SIMPLE_DATE_FORMAT);
             return dateBefore.compareTo(dateTo) < 0;
         } catch (Exception ex) {
             log.warn(ex.getMessage());
