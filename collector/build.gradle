@@ -1,7 +1,7 @@
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter')
-    implementation('com.squareup.okhttp3:okhttp:4.2.2')
-    implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.10.0')
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("com.squareup.okhttp3:okhttp:${okhttpVersion}")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${jacksonVersion}")
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

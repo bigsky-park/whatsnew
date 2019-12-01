@@ -35,12 +35,17 @@ subprojects {
     }
 
     dependencies {
-        compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly("org.projectlombok:lombok")
+        annotationProcessor("org.projectlombok:lombok")
 
-        implementation('com.amazonaws:aws-java-sdk-s3:1.11.679')
-        implementation('javax.xml.bind:jaxb-api:2.3.1')
+        implementation("com.amazonaws:aws-java-sdk-s3:1.11.679")
+        implementation("javax.xml.bind:jaxb-api:2.3.1")
     }
+}
+
+ext {
+    jacksonVersion = "2.10.1"
+    okhttpVersion = "4.2.2"
 }
 
 project(':core') {
