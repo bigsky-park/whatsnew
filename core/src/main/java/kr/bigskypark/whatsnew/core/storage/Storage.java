@@ -16,7 +16,7 @@ public interface Storage {
 
     String CONFIG_FILE_EXTENSION = ".yml";
 
-    Optional<List<String>> listJobConfigurationPaths();
+    Optional<List<String>> listJobConfigurationPaths(String type);
 
     Optional<JobConfiguration> getConfig(String path);
 

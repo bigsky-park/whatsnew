@@ -28,9 +28,9 @@ public class S3Storage implements Storage {
     private final ObjectMapper jsonMapper;
 
     @Override
-    public Optional<List<String>> listJobConfigurationPaths() {
+    public Optional<List<String>> listJobConfigurationPaths(final String type) {
         try {
-            final var result = s3.listObjectsV2(bucket, JOB_CONFIG_FILE_PREFIX);
+            final var result = s3.listObjectsV2(bucket, JOB_CONFIG_FILE_PREFIX + "/" + type);
             final var paths = result.getObjectSummaries().stream()
                     .filter(summary -> summary.getKey().endsWith(CONFIG_FILE_EXTENSION))
                     .map(S3ObjectSummary::getKey)
