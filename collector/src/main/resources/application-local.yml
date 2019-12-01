@@ -8,3 +8,7 @@ naver:
     paths: v1/search/book_adv.xml
     client-id: ${NAVER_CLIENT_ID}
     client-secret: ${NAVER_CLIENT_SECRET}
+
+storage:
+  s3:
+    bucket: s3-whatsnew-local

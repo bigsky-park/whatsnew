@@ -1,35 +1,52 @@
 package kr.bigskypark.whatsnew.collector;
 
-import kr.bigskypark.whatsnew.collector.book.client.BookSearchClient;
-import kr.bigskypark.whatsnew.collector.book.client.NaverBookCategories;
-import kr.bigskypark.whatsnew.collector.book.dto.DetailBookSearchRequest;
-import kr.bigskypark.whatsnew.collector.book.dto.Rss;
+import kr.bigskypark.whatsnew.collector.book.BookDataCollectingJob;
+import kr.bigskypark.whatsnew.core.storage.Storage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.TimeUnit;
-
 @RequiredArgsConstructor
 @Component
 public class CollectorRunner implements ApplicationRunner {
 
-    private final BookSearchClient bookSearchClient;
+    private final Storage storage;
+
+    private final BookDataCollectingJob bookDataCollectingJob;
 
     @Override
     public void run(final ApplicationArguments args) throws Exception {
-        // run example
-        final var request = DetailBookSearchRequest.builder()
-                .display(10)
-                .dTitle("쿠버네티스")
-                .dCatg(NaverBookCategories.COMPUTER_IT_GENERAL.code())
-                .dDafr("20191001")
-                .dDato("20191101")
-                .build();
+        final var type = getParameter(args, "category");
+        storage.listJobConfigurationPaths(type).ifPresent(configurationPaths ->
+                configurationPaths.forEach(configPath -> {
+                    storage.getConfig(configPath).ifPresent(config -> {
+                        final var job = getJobFor(config.getCategory().name());
+                        job.run(config);
+                    });
+                }));
+    }
 
-        final var rss = bookSearchClient.searchFor(request);
-        System.out.println(rss);
+    private static String getParameter(final ApplicationArguments args,
+                                       final String name) {
+        if (args.containsOption(name)) {
+            final var values = args.getOptionValues(name);
+            if (values == null || values.size() != 1) {
+                throw new IllegalArgumentException("parameter %s is not provided properly. " +
+                        "It should be provided just one time");
+            }
+            return values.get(0).trim();
+        } else {
+            throw new IllegalArgumentException(String.format("Argument %s does not exists", name));
+        }
+    }
+
+    private DataCollectingJob getJobFor(final String category) {
+        if ("book".equalsIgnoreCase(category)) {
+            return bookDataCollectingJob;
+        } else {
+            throw new IllegalArgumentException(category + " is invalid category name");
+        }
     }
 
 }
