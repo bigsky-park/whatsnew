@@ -4,13 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.function.Predicate;
+
+import static kr.bigskypark.whatsnew.collector.book.util.TimeUtils.SIMPLE_DATE_FORMAT;
 
 @Slf4j
 public final class HttpUrlUtils {
-
-    private static final DateTimeFormatter SIMPLE_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     private HttpUrlUtils() {
         throw new AssertionError("utility class cannot be initialized");

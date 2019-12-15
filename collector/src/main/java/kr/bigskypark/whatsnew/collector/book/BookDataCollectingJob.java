@@ -1,30 +1,36 @@
 package kr.bigskypark.whatsnew.collector.book;
 
 import kr.bigskypark.whatsnew.collector.DataCollectingJob;
+import kr.bigskypark.whatsnew.collector.book.service.BookSearchEngine;
 import kr.bigskypark.whatsnew.core.dto.JobConfiguration;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-// TODO: consider using lazy initialization
+@RequiredArgsConstructor
 @Component
 public class BookDataCollectingJob implements DataCollectingJob {
 
+    private final BookSearchEngine searchEngine;
+
     @Override
     public void run(final JobConfiguration configuration) {
-        // TODO: get values from configuration & create book search request
+        ensureConfigurationIsValidForBookSearch(configuration);
+        final var details = configuration.getDetails();
+        final var title = (String) details.get("title_keyword");
+        final var categoryCode = (Integer) details.get("category_code");
 
-        // TODO: do search
-//        final var request = DetailBookSearchRequest.builder()
-//                .display(8)
-//                .dTitle("쿠버네티스")
-//                .dCatg(NaverBookCategories.COMPUTER_IT_GENERAL.code())
-//                .dDafr("20190999")
-//                .dDato("20191099")
-//                .build();
-//
-//        final var rss = bookSearchClient.searchFor(request);
-//        System.out.println(rss);
+        final var items = searchEngine.search(title, categoryCode, configuration.getPeriod().getValue());
+        // TODO: implement persistence logic
+    }
 
-        // TODO: put searched item to storage
+    private void ensureConfigurationIsValidForBookSearch(final JobConfiguration configuration) {
+        final var details = configuration.getDetails();
+        if (!details.containsKey("category_code")) {
+            throw new IllegalArgumentException("configuration does not contains category_code");
+        }
+        if (!details.containsKey("title_keyword")) {
+            throw new IllegalArgumentException("configuration does not contains title_keyword");
+        }
     }
 
 }
