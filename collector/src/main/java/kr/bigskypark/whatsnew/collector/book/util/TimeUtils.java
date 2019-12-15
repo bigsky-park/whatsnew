@@ -8,16 +8,22 @@ public class TimeUtils {
 
     public static final DateTimeFormatter SIMPLE_DATE_FORMAT = DateTimeFormatter.ofPattern("YYYYMMdd");
 
+    private static final ZoneId SEOUL_ZONE = ZoneId.of("Asia/Seoul");
+
     private TimeUtils() {
         throw new AssertionError("utility class cannot be initialized");
     }
 
-    public static String getCurrentDate() {
-        return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).format(SIMPLE_DATE_FORMAT);
+    public static ZonedDateTime getCurrentDatetime() {
+        return ZonedDateTime.now(SEOUL_ZONE);
     }
 
-    public static String getDateMinusDaysFrom(final int numberOfDays) {
-        return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).minusDays(numberOfDays).format(SIMPLE_DATE_FORMAT);
+    public static String toDateString(final ZonedDateTime zonedDateTime) {
+        return zonedDateTime.format(SIMPLE_DATE_FORMAT);
+    }
+
+    public static String toDateStringMinusDays(final ZonedDateTime zonedDateTime, final int minusDays) {
+        return zonedDateTime.minusDays(minusDays).format(SIMPLE_DATE_FORMAT);
     }
 
 }
