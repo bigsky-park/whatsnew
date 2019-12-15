@@ -1,0 +1,9 @@
+version: 0.0.1
+username: bigsky-park
+category: book
+period:
+  unit: day
+  value: 7
+details:
+  category_code: 300
+  title_keyword: 쿠버네티스

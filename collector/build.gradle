@@ -1,0 +1,6 @@
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("com.squareup.okhttp3:okhttp:${okhttpVersion}")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
