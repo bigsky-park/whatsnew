@@ -16,22 +16,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3Configuration {
 
-    @Value("${storage.s3.bucket}")
-    private String s3Bucket;
+  @Value("${storage.s3.bucket}")
+  private String s3Bucket;
 
-    @Bean
-    public Storage storage() {
-        final var s3 = AmazonS3ClientBuilder.standard()
-                .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
-                .withRegion(Regions.AP_NORTHEAST_2)
-                .build();
+  @Bean
+  public Storage storage() {
+    final var s3 =
+        AmazonS3ClientBuilder.standard()
+            .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+            .withRegion(Regions.AP_NORTHEAST_2)
+            .build();
 
-        final var yamlMapper = new ObjectMapper(new YAMLFactory());
-        final var jsonMapper = new ObjectMapper()
-                .registerModule(new Jdk8Module())
-                .registerModule(new JavaTimeModule());
+    final var yamlMapper = new ObjectMapper(new YAMLFactory());
+    final var jsonMapper =
+        new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
 
-        return new S3Storage(s3, s3Bucket, yamlMapper, jsonMapper);
-    }
-
+    return new S3Storage(s3, s3Bucket, yamlMapper, jsonMapper);
+  }
 }

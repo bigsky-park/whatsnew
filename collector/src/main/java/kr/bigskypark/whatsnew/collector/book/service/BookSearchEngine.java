@@ -18,29 +18,25 @@ import java.util.stream.Collectors;
 @Service
 public class BookSearchEngine {
 
-    private final BookSearchClient bookSearchClient;
+  private final BookSearchClient bookSearchClient;
 
-    public List<Book> search(final String title,
-                             final int categoryCode,
-                             final ZonedDateTime runAt,
-                             final int minusDays) {
-        final var dateAfter = TimeUtils.toDateStringMinusDays(runAt, minusDays);
-        final var dateTo = TimeUtils.toDateString(runAt);
-        final var category = NaverBookCategories.fromCode(categoryCode);
+  public List<Book> search(
+      final String title, final int categoryCode, final ZonedDateTime runAt, final int minusDays) {
+    final var dateAfter = TimeUtils.toDateStringMinusDays(runAt, minusDays);
+    final var dateTo = TimeUtils.toDateString(runAt);
+    final var category = NaverBookCategories.fromCode(categoryCode);
 
-        final var request = DetailBookSearchRequest.builder()
-                // display is max number of search results.
-                // TODO: currently it is fixed to 30. make it configurable
-                .display(30)
-                .dTitle(title)
-                .dCatg(category.code())
-                .dDafr(dateAfter)
-                .dDato(dateTo)
-                .build();
-        final var rss = bookSearchClient.searchFor(request);
-        return rss.getChannel().getItems().stream()
-                .map(Book::fromItem)
-                .collect(Collectors.toList());
-    }
-
+    final var request =
+        DetailBookSearchRequest.builder()
+            // display is max number of search results.
+            // TODO: currently it is fixed to 30. make it configurable
+            .display(30)
+            .dTitle(title)
+            .dCatg(category.code())
+            .dDafr(dateAfter)
+            .dDato(dateTo)
+            .build();
+    final var rss = bookSearchClient.searchFor(request);
+    return rss.getChannel().getItems().stream().map(Book::fromItem).collect(Collectors.toList());
+  }
 }

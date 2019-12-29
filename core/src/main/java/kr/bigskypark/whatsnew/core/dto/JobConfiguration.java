@@ -14,18 +14,16 @@ import java.util.Map;
 @Value
 public class JobConfiguration {
 
-    private String version;
+  private String version;
 
-    private String username;
+  private String username;
 
-    private Category category;
+  private Category category;
 
-    private Period period;
+  private Period period;
 
-    private Map<String, Object> details;
+  private Map<String, Object> details;
 
-    @JsonPOJOBuilder(withPrefix = "")
-    static class JobConfigurationBuilder {
-    }
-
+  @JsonPOJOBuilder(withPrefix = "")
+  static class JobConfigurationBuilder {}
 }

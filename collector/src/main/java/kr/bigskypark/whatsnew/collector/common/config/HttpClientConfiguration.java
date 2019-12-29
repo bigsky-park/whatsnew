@@ -7,10 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class HttpClientConfiguration {
 
-    @Bean
-    public OkHttpClient okHttpClient() {
-        return new OkHttpClient.Builder()
-                .build();
-    }
-
+  @Bean
+  public OkHttpClient okHttpClient() {
+    return new OkHttpClient.Builder().build();
+  }
 }

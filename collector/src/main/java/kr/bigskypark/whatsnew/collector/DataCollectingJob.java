@@ -4,6 +4,5 @@ import kr.bigskypark.whatsnew.core.dto.JobConfiguration;
 
 public interface DataCollectingJob {
 
-    void run(JobConfiguration configuration);
-
+  void run(JobConfiguration configuration);
 }

@@ -11,18 +11,17 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("naver.api")
 public class NaverApiProperties {
 
-    public static final String CLIENT_ID_HEADER = "X-Naver-Client-Id";
+  public static final String CLIENT_ID_HEADER = "X-Naver-Client-Id";
 
-    public static final String CLIENT_SECRET_HEADER = "X-Naver-Client-Secret";
+  public static final String CLIENT_SECRET_HEADER = "X-Naver-Client-Secret";
 
-    private String scheme;
+  private String scheme;
 
-    private String host;
+  private String host;
 
-    private String paths;
+  private String paths;
 
-    private String clientId;
+  private String clientId;
 
-    private String clientSecret;
-
+  private String clientSecret;
 }

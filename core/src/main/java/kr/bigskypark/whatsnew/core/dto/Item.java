@@ -16,12 +16,11 @@ import java.util.List;
 @Data
 public class Item {
 
-    private String username;
+  private String username;
 
-    private ZonedDateTime runAt;
+  private ZonedDateTime runAt;
 
-    private Category category;
+  private Category category;
 
-    private List<JsonNode> data;
-
+  private List<JsonNode> data;
 }

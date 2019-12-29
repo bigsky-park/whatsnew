@@ -5,6 +5,5 @@ import kr.bigskypark.whatsnew.collector.book.dto.Rss;
 
 public interface BookSearchClient {
 
-    Rss searchFor(DetailBookSearchRequest searchRequest);
-
+  Rss searchFor(DetailBookSearchRequest searchRequest);
 }

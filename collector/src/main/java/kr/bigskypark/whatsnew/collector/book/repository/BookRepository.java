@@ -20,32 +20,33 @@ import java.util.stream.Collectors;
 @Repository
 public class BookRepository {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+  private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private final Storage storage;
+  private final Storage storage;
 
-    public void saveAll(final String user,
-                        final Category category,
-                        final ZonedDateTime runAt,
-                        final Period period,
-                        final String keyword,
-                        final List<Book> books) {
-        final var itemToPersist = Item.builder()
-                .username(user)
-                .category(category)
-                .runAt(runAt)
-                .data(toJsonNodeList(books))
-                .build();
+  public void saveAll(
+      final String user,
+      final Category category,
+      final ZonedDateTime runAt,
+      final Period period,
+      final String keyword,
+      final List<Book> books) {
+    final var itemToPersist =
+        Item.builder()
+            .username(user)
+            .category(category)
+            .runAt(runAt)
+            .data(toJsonNodeList(books))
+            .build();
 
-        final var date = TimeUtils.toDateString(runAt);
-        final var path = S3KeyResolver.resolveForItem(category, date, user, period, keyword);
-        storage.putItem(path, itemToPersist);
-    }
+    final var date = TimeUtils.toDateString(runAt);
+    final var path = S3KeyResolver.resolveForItem(category, date, user, period, keyword);
+    storage.putItem(path, itemToPersist);
+  }
 
-    private static List<JsonNode> toJsonNodeList(final List<Book> books) {
-        return books.stream()
-                .map(book -> MAPPER.convertValue(book, JsonNode.class))
-                .collect(Collectors.toList());
-    }
-
+  private static List<JsonNode> toJsonNodeList(final List<Book> books) {
+    return books.stream()
+        .map(book -> MAPPER.convertValue(book, JsonNode.class))
+        .collect(Collectors.toList());
+  }
 }

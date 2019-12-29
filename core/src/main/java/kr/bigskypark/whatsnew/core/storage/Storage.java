@@ -8,20 +8,19 @@ import java.util.Optional;
 
 public interface Storage {
 
-    String FILE_NAME_DELIMITER = "__del__";
+  String FILE_NAME_DELIMITER = "__del__";
 
-    String DATA_FILE_EXTENSION = ".json";
+  String DATA_FILE_EXTENSION = ".json";
 
-    String JOB_CONFIG_FILE_PREFIX = "config/job";
+  String JOB_CONFIG_FILE_PREFIX = "config/job";
 
-    String CONFIG_FILE_EXTENSION = ".yml";
+  String CONFIG_FILE_EXTENSION = ".yml";
 
-    Optional<List<String>> listJobConfigurationPaths(String type);
+  Optional<List<String>> listJobConfigurationPaths(String type);
 
-    Optional<JobConfiguration> getConfig(String path);
+  Optional<JobConfiguration> getConfig(String path);
 
-    Optional<Item> getItem(String path);
+  Optional<Item> getItem(String path);
 
-    void putItem(String path,
-                 Item item);
+  void putItem(String path, Item item);
 }

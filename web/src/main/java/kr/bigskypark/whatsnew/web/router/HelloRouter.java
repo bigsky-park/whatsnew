@@ -11,11 +11,8 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 @Configuration
 public class HelloRouter {
 
-    @Bean
-    public RouterFunction<ServerResponse> hello() {
-        return RouterFunctions
-                .route(GET("/hello"),
-                        request -> ServerResponse.ok().bodyValue("hello"));
-    }
-
+  @Bean
+  public RouterFunction<ServerResponse> hello() {
+    return RouterFunctions.route(GET("/hello"), request -> ServerResponse.ok().bodyValue("hello"));
+  }
 }

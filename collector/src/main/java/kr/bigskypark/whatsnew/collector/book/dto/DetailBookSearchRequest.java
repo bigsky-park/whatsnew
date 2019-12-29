@@ -7,23 +7,21 @@ import lombok.Data;
 @Data
 public class DetailBookSearchRequest {
 
-    @Builder.Default
-    private int display = -1;
+  @Builder.Default private int display = -1;
 
-    private String dTitle;
+  private String dTitle;
 
-    private String dAuth;
+  private String dAuth;
 
-    private String dCont;
+  private String dCont;
 
-    private String dIsbn;
+  private String dIsbn;
 
-    private String dPubl;
+  private String dPubl;
 
-    private String dDafr;
+  private String dDafr;
 
-    private String dDato;
+  private String dDato;
 
-    private String dCatg;
-
+  private String dCatg;
 }

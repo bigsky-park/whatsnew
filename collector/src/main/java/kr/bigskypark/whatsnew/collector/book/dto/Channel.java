@@ -6,28 +6,25 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- * @see <a href="https://developers.naver.com/docs/search/book/"/>
- */
+/** @see <a href="https://developers.naver.com/docs/search/book/"/> */
 @Data
 public class Channel {
 
-    private String title;
+  private String title;
 
-    private String link;
+  private String link;
 
-    private String description;
+  private String description;
 
-    private String lastBuildDate;
+  private String lastBuildDate;
 
-    private int total;
+  private int total;
 
-    private int start;
+  private int start;
 
-    private int display;
+  private int display;
 
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "item")
-    private List<Item> items;
-
+  @JacksonXmlElementWrapper(useWrapping = false)
+  @JacksonXmlProperty(localName = "item")
+  private List<Item> items;
 }

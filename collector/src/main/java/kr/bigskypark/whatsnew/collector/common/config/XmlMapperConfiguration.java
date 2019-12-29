@@ -7,10 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class XmlMapperConfiguration {
 
-    @Bean
-    public XmlMapper xmlMapper() {
-        return XmlMapper.builder()
-                .build();
-    }
-
+  @Bean
+  public XmlMapper xmlMapper() {
+    return XmlMapper.builder().build();
+  }
 }
